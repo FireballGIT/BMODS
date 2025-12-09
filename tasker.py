@@ -1,3 +1,5 @@
+#(C)2025 BMODS by BAG Studios. Licensed under the MIT License.
+
 tasks = []
 
 def add_tasks(num_items):
@@ -27,9 +29,3 @@ def show_all():
     # Loop directly over the items for simpler access
     for index, item in enumerate(tasks, 1):
       print(f"{index}. {item}")
-
-# --- Example Usage ---
-# add_tasks(2) # Uncomment to test adding items via user input
-# show_all()
-# remove_item(0)
-# show_all()
