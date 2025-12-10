@@ -29,3 +29,7 @@ def show_all():
     # Loop directly over the items for simpler access
     for index, item in enumerate(tasks, 1):
       print(f"{index}. {item}")
+
+def clear():
+  tasks = []
+
