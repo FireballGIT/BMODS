@@ -1,35 +1,36 @@
-#(C)2025 BMODS by BAG Studios. Licensed under the MIT License.
+class Tasker:
+    tasks = []
 
-tasks = []
+    @classmethod
+    def add_tasks(cls, num_items):
+        for token in range(1, num_items + 1):
+            item = input(f"{token}. Enter a task: ")
+            cls.tasks.append(item)
 
-def add_tasks(num_items):
-  for token in range(1, num_items + 1):
-    item = input(f"{token}. Enter a task: ")
-    tasks.append(item)
+    @classmethod
+    def show_item(cls, index):
+        if 0 <= index < len(cls.tasks):
+            print(cls.tasks[index])
+        else:
+            print(f"Error: Index {index} is out of range.")
 
-def show_item(index):
-  # Use len() to prevent IndexError if index is out of range
-  if 0 <= index < len(tasks):
-    print(tasks[index])
-  else:
-    print(f"Error: Index {index} is out of range.")
+    @classmethod
+    def remove_item(cls, index):
+        if 0 <= index < len(cls.tasks):
+            removed = cls.tasks.pop(index)
+            print(f"Removed item: '{removed}'")
+        else:
+            print(f"Error: Index {index} is out of range. No item removed.")
 
-def remove_item(index):
-  if 0 <= index < len(tasks):
-    removed = tasks.pop(index)
-    print(f"Removed item: '{removed}'")
-  else:
-    print(f"Error: Index {index} is out of range. No item removed.")
+    @classmethod
+    def show_all(cls):
+        if not cls.tasks:
+            print("The task list is currently empty.")
+        else:
+            print("Current Tasks:")
+            for idx, item in enumerate(cls.tasks, 1):
+                print(f"{idx}. {item}")
 
-def show_all():
-  if not tasks:
-    print("The task list is currently empty.")
-  else:
-    print("Current Tasks:")
-    # Loop directly over the items for simpler access
-    for index, item in enumerate(tasks, 1):
-      print(f"{index}. {item}")
-
-def clear():
-  tasks = []
-
+    @classmethod
+    def clear(cls):
+        cls.tasks = []
