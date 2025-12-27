@@ -1,40 +1,72 @@
-def load(ext):
-  #do this later, but it's supposed to load extensions for stuff like triginometry, calculus, and more.
+import importlib
+import os
+import sys
 
-def add(num1, num2):
-  return num1 + num2
+class CalcuFunction:
+    _extension_dir = os.path.dirname(os.path.abspath(__file__))
 
-def sub(num1, num2):
-  return num1 - num2
+    # ----------------
+    # Core math
+    # ----------------
+    @staticmethod
+    def add(a, b): return a + b
 
-def product(num1, num2):
-  return num1 * num2
+    @staticmethod
+    def sub(a, b): return a - b
 
-def div(dividend, divisor):
-  return dividend / divisor
+    @staticmethod
+    def product(a, b): return a * b
 
-def exp(i, n):
-  return i ** n
+    @staticmethod
+    def div(a, b): return a / b
 
-def floor(num1, num2):
-  return num1 // num2
+    @staticmethod
+    def exp(a, b): return a ** b
 
-def calculator():
-  print("CalcuFunction Calculator")
-  op = int(input("ENTER OPERATOR(+, -, *, /, //, or ^): "))
-  n1 = int(input("ENTER 1st NUMBER: "))
-  n2 = int(input("ENTER 2nd NUMBER: "))
-  if op == "+":
-    print(add(num1, num2))
-  elif op == "-":
-    print(sub())
-  elif op == "*":
-    print(product(n1, n2))
-  elif op == "/":
-    print(div(n1, n2))
-  elif op == "//":
-    print(floor(n1, n2))
-  elif op == "^":
-    print(exp(n1, n2))
-  else:
-    print("ERROR! Invalid operator!")
+    @staticmethod
+    def floor(a, b): return a // b
+
+    # ----------------
+    # CLI Calculator
+    # ----------------
+    @staticmethod
+    def calculator():
+        print("CalcuFunction Calculator")
+
+        op = input("ENTER OPERATOR (+, -, *, /, //, ^): ")
+        n1 = int(input("ENTER 1st NUMBER: "))
+        n2 = int(input("ENTER 2nd NUMBER: "))
+
+        if op == "+":
+            print(CalcuFunction.add(n1, n2))
+        elif op == "-":
+            print(CalcuFunction.sub(n1, n2))
+        elif op == "*":
+            print(CalcuFunction.product(n1, n2))
+        elif op == "/":
+            print(CalcuFunction.div(n1, n2))
+        elif op == "//":
+            print(CalcuFunction.floor(n1, n2))
+        elif op == "^":
+            print(CalcuFunction.exp(n1, n2))
+        else:
+            print("ERROR! Invalid operator!")
+
+    # ----------------
+    # Extensions
+    # ----------------
+    @staticmethod
+    def load(filename):
+        if not filename.endswith(".py"):
+            filename += ".py"
+
+        module_name = filename[:-3]
+        if CalcuFunction._extension_dir not in sys.path:
+            sys.path.append(CalcuFunction._extension_dir)
+
+        module = importlib.import_module(module_name)
+
+        if hasattr(module, "CalcuFunction"):
+            for attr in dir(module.CalcuFunction):
+                if not attr.startswith("_"):
+                    setattr(CalcuFunction, attr, getattr(module.CalcuFunction, attr))
